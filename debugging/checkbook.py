@@ -23,6 +23,17 @@ class Checkbook:
     def get_balance(self):
         print("Current Balance: ${:.2f}".format(self.balance))
 
+def get_valid_amount(prompt):
+    while True:
+        user_input = input(prompt)
+        try:
+            # Try to convert the input to a float
+            amount = float(user_input)
+            return amount
+        except ValueError:
+            # Handle invalid input
+            print("Invalid input. Please enter a valid numeric value.")
+
 def main():
     cb = Checkbook()
     while True:
@@ -31,17 +42,11 @@ def main():
             print("Exiting. Thank you for using the Checkbook!")
             break
         elif action == 'deposit':
-            try:
-                amount = float(input("Enter the amount to deposit: $"))
-                cb.deposit(amount)
-            except ValueError:
-                print("Invalid input. Please enter a numeric value.")
+            amount = get_valid_amount("Enter the amount to deposit: $")
+            cb.deposit(amount)
         elif action == 'withdraw':
-            try:
-                amount = float(input("Enter the amount to withdraw: $"))
-                cb.withdraw(amount)
-            except ValueError:
-                print("Invalid input. Please enter a numeric value.")
+            amount = get_valid_amount("Enter the amount to withdraw: $")
+            cb.withdraw(amount)
         elif action == 'balance':
             cb.get_balance()
         else:
